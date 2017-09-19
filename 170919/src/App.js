@@ -132,7 +132,8 @@ class App extends Component {
   }
   _getContent() {
     if (this.project != null) {
-      return (<table className="content">
+      return (
+        <table className="content">
         <tbody>
           <tr>
             <td>
@@ -176,7 +177,7 @@ class App extends Component {
           {this._getOptions()}
           {this._getContent()}
           <Projects projects={this.state.projects} />
-          
+
       </div>
     );
   }
