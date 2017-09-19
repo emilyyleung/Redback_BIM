@@ -7,6 +7,7 @@ import * as helpers from './util/helpers.js';
 import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 
+import Keys from './Components/KeyList';
 
 const config = {
   url: window.location.href,
@@ -133,35 +134,13 @@ class App extends Component {
   _getContent() {
     if (this.project != null) {
       return (
-        <table className="content">
-        <tbody>
-          <tr>
-            <td>
-              Flux JSON
-            </td>
-            <td>
-              Flux Viewport (three.js)
-            </td>
-            <td>
-              three.js JSON
-            </td>
-          </tr>
+        <div className="content">
+          <div className="viewport" ref={this.setViewport.bind(this)}></div>
+        </div>
 
-          <tr>
-            <td>
-              <textarea id="data" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.state.data} ref={(area)=>{this._comment = area;}} name="Data"></textarea><br/>
-            </td>
-            <td>
-              <div className="viewport" ref={this.setViewport.bind(this)}></div>
-            </td>
-            <td>
-              <textarea id="dataThree" className="fields" readOnly="true" value={this.state.dataThree} ></textarea><br/>
-            </td>
-          </tr>
-        </tbody>
-      </table>);
+        );
     } else {
-      return <table className="content"></table>
+      return <div className="content"></div>
     }
   }
   // Function to update react state to match what is in the text box
@@ -171,13 +150,14 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.projects);
+    // console.log(this.state.projects);
+    // console.log(this.state.keys);
     return (
       <div className="App">
           {this._getOptions()}
           {this._getContent()}
           <Projects projects={this.state.projects} />
-
+          <Keys keys={this.state.keys} />
       </div>
     );
   }
