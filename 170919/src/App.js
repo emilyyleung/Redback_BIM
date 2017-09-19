@@ -5,6 +5,8 @@ import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
 import Button from './Button';
 import * as helpers from './util/helpers.js';
 import Dropdown from './Dropdown';
+import Projects from './Components/Projects';
+
 
 const config = {
   url: window.location.href,
@@ -168,11 +170,13 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.projects);
     return (
-
       <div className="App">
           {this._getOptions()}
           {this._getContent()}
+          <Projects projects={this.state.projects} />
+          
       </div>
     );
   }
