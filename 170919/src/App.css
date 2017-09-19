@@ -11,7 +11,22 @@ textarea.fields {
     min-height: 200px;
 }
 
-/*div.viewport {
-  height: 200px;
-  width: 300px;
-}*/
+div.viewport {
+  height: 80vh;
+  width: 100vh;
+  z-index: 1;
+
+}
+
+div.content {
+  float: right;
+  width: 50%;
+  height: 100%;
+  z-index: 2;
+}
+
+div.info {
+  width: 50%;
+  height: 100%;
+  z-index: 3;
+}

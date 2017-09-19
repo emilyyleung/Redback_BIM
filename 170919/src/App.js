@@ -8,6 +8,8 @@ import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 
 import KeyList from './Components/KeyList';
+import AddKey from './Components/AddKey';
+import $ from 'jquery';
 
 const config = {
   url: window.location.href,
@@ -43,6 +45,13 @@ class App extends Component {
         });
       }
     });
+  }
+
+  handleSubmitKey(keyItem){
+    console.log(keyItem);
+    // let keyList = this.state.keyList;
+    // keyList.push(keyItem);
+    // this.setState({keyList: keyList});
   }
 
   setViewport(div)
@@ -117,6 +126,8 @@ class App extends Component {
     });
   }
 
+
+
   _getOptions() {
     if (this.state.loggedIn) {
       return (<div className="options">
@@ -131,13 +142,13 @@ class App extends Component {
         </div>);
     }
   }
+
   _getContent() {
     if (this.project != null) {
       return (
         <div className="content">
           <div className="viewport" ref={this.setViewport.bind(this)}></div>
         </div>
-
         );
     } else {
       return <div className="content"></div>
@@ -156,8 +167,11 @@ class App extends Component {
       <div className="App">
           {this._getOptions()}
           {this._getContent()}
-          <Projects projects={this.state.projects} />
-          <KeyList test="Hello World" keyList={this.state.keys} />
+          <div className="info">
+            <Projects projects={this.state.projects} />
+            <KeyList test="Hello World" keyList={this.state.keys} />
+            <AddKey addKey={this.handleSubmitKey.bind(this)}/>
+          </div>
       </div>
     );
   }
