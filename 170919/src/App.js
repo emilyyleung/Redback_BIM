@@ -169,6 +169,7 @@ class App extends Component {
 
   render() {
     return (
+
       <div className="App">
           {this._getOptions()}
           {this._getContent()}
