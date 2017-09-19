@@ -7,7 +7,7 @@ import * as helpers from './util/helpers.js';
 import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 
-import Keys from './Components/KeyList';
+import KeyList from './Components/KeyList';
 
 const config = {
   url: window.location.href,
@@ -157,7 +157,7 @@ class App extends Component {
           {this._getOptions()}
           {this._getContent()}
           <Projects projects={this.state.projects} />
-          <Keys keys={this.state.keys} />
+          <KeyList test="Hello World" keyList={this.state.keys} />
       </div>
     );
   }
