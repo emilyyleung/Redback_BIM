@@ -1,4 +1,4 @@
-// import $ from 'jquery';
+import $ from 'jquery';
 // instantiate the Flux SDK with your appliation key
 let sdk;
 let helpers;
@@ -34,6 +34,30 @@ export function init(config) {
         // check that the user is logged in, otherwise show the login page
         .then(function() { return helpers.isLoggedIn() });
 
+}
+
+/**
+ * Initialize the create cell (key) input + button.
+ */
+export function initCreate() {
+  $('.create.submitbutton').on('click', function(e) {
+    let selectedProject = this.project;
+    // get the input field
+    var input = $(e.target).parent().find('input')
+    // get the input field value
+    var value = input.val()
+    // check we have a name
+    if (value === '') return
+    // check we have a project selected
+    if (!selectedProject) return
+    // create the cell (key)
+    createCell(selectedProject, value).then(function() {
+      // clear the input
+      input.val('')
+      // refresh the cell (key) select boxes
+      getCells()
+    })
+  })
 }
 
 /**

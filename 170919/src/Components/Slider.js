@@ -5,7 +5,7 @@ class Slider extends Component {
 
     return (
       <div className='Slider'>
-        <h3>To Flux</h3> 
+        <h3>To Flux</h3>
         <input type='range' />
       </div>
     );

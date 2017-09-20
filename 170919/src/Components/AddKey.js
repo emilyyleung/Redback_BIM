@@ -20,7 +20,7 @@ class AddKey extends Component {
           this.props.addKey(this.state.newKey);
       });
     }
-    e.preventDefault();
+     e.preventDefault();
   }
 
   render() {
@@ -31,7 +31,7 @@ class AddKey extends Component {
           <h3>Add Key</h3>
           <div className="create">
             <input type="text" ref="keyItem" />
-            <input type="submit" value="Create Key" />
+            <input className="submitbutton" type="submit" value="Create Key" />
           </div>
         </form>
       </div>

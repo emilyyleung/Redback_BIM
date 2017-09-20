@@ -3,6 +3,7 @@ import './App.css';
 // import * as THREE from 'three';
 import * as helpers from './util/helpers.js';
 import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
+import $ from 'jquery';
 
 import Button from './Button';
 import Dropdown from './Dropdown';
@@ -11,8 +12,6 @@ import Projects from './Components/Projects';
 import Slider from './Components/Slider';
 import KeyList from './Components/KeyList';
 import AddKey from './Components/AddKey';
-import $ from 'jquery';
-
 
 const config = {
   url: window.location.href,
@@ -37,6 +36,7 @@ class App extends Component {
     helpers.init(config).then((loggedIn) => {
       this.setState({loggedIn: loggedIn});
       if (loggedIn) {
+        helpers.initCreate();
         helpers.getProjects().then((projects)=>{
           this.projectMap = {};
           for (let i=0;i<projects.entities.length;i++) {
@@ -55,6 +55,14 @@ class App extends Component {
     // keyList.push(keyItem);
     // this.setState({keyList: keyList});
     // console.log(this.keyList);
+    let createNewCell = this.createCell;
+    let thisProject = this.project;
+    let newlyMadeKey = this.keyItem;
+
+    if(keyItem === '') {
+      createNewCell.push(thisProject, newlyMadeKey);
+
+    }
   }
 
   setViewport(div)
@@ -175,7 +183,7 @@ class App extends Component {
             <Projects projects={this.state.projects} />
             <KeyList test="Hello World" keyList={this.state.keys} />
             <AddKey addKey={this.handleSubmitKey.bind(this)}/> <br />
-            <Slider />
+            <Slider className="slider" />
 
           </div>
       </div>
