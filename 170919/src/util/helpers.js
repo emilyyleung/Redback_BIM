@@ -1,8 +1,10 @@
+import $ from 'jquery';
 // instantiate the Flux SDK with your appliation key
 let sdk;
 let helpers;
 let user = null;
 let dataTables = {};
+// let selectedProject;
 
 export function login() {
     helpers.redirectToFluxLogin()
@@ -33,6 +35,7 @@ export function init(config) {
         .then(function() { return helpers.isLoggedIn() });
 
 }
+
 /**
  * Get a project's data table.
  */

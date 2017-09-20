@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 // import * as THREE from 'three';
-import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
-import Button from './Button';
 import * as helpers from './util/helpers.js';
-import Dropdown from './Dropdown';
-import Projects from './Components/Projects';
+import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
 
+import Button from './Button';
+import Dropdown from './Dropdown';
+
+import Projects from './Components/Projects';
+import Slider from './Components/Slider';
 import KeyList from './Components/KeyList';
 import AddKey from './Components/AddKey';
 import $ from 'jquery';
+
 
 const config = {
   url: window.location.href,
@@ -48,10 +51,10 @@ class App extends Component {
   }
 
   handleSubmitKey(keyItem){
-    console.log(keyItem);
-    // let keyList = this.state.keyList;
+    // console.log(keyItem);
     // keyList.push(keyItem);
     // this.setState({keyList: keyList});
+    // console.log(this.keyList);
   }
 
   setViewport(div)
@@ -162,7 +165,8 @@ class App extends Component {
 
   render() {
     // console.log(this.state.projects);
-    // console.log(this.state.keys);
+    console.log(this.state.keys);
+
     return (
       <div className="App">
           {this._getOptions()}
@@ -170,7 +174,9 @@ class App extends Component {
           <div className="info">
             <Projects projects={this.state.projects} />
             <KeyList test="Hello World" keyList={this.state.keys} />
-            <AddKey addKey={this.handleSubmitKey.bind(this)}/>
+            <AddKey addKey={this.handleSubmitKey.bind(this)}/> <br />
+            <Slider />
+
           </div>
       </div>
     );

@@ -10,13 +10,13 @@ class AddKey extends Component {
 
   handleSubmitKey(e) {
     // console.log(this.refs.keyItem.value);
-    if(this.refs.keyItem.value == ''){
+    if(this.refs.keyItem.value === ''){
       alert('Key is required');
     } else {
       this.setState({newKey:{
         keyItem: this.refs.keyItem.value
       }}, function(){
-          // console.log(this.state);
+          console.log(this.state);
           this.props.addKey(this.state.newKey);
       });
     }
@@ -24,6 +24,7 @@ class AddKey extends Component {
   }
 
   render() {
+    // console.log(this.state.newKey);
     return (
       <div className="AddKey">
         <form onSubmit={this.handleSubmitKey.bind(this)} >

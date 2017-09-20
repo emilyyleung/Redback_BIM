@@ -13,7 +13,7 @@ class KeyList extends Component {
     });
   }
 
-    // console.log(this.props);
+    // console.log(this.props); // KeyList in one array
     return (
       <div className="KeyList">
         <h3>My Keys</h3>

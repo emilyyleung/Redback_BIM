@@ -8,7 +8,7 @@ html, body {
 
 div.viewport {
   float: right;
-    width:100vh;
+    width:90vh;
     height:100vh;
     display:inline-block;
     background-color:#FFCCCC;
