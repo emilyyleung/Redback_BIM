@@ -31,7 +31,7 @@ class AddKey extends Component {
           <h3>Add Key</h3>
           <div className="create">
             <input type="text" ref="keyItem" />
-            <input className="submitbutton" type="submit" value="Create Key" />
+            <input className="submitButton" type="submit" value="Create Key" />
           </div>
         </form>
       </div>
