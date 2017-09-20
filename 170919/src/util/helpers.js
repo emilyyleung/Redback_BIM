@@ -1,4 +1,4 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 // instantiate the Flux SDK with your appliation key
 let sdk;
 let helpers;
