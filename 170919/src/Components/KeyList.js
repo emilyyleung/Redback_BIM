@@ -5,7 +5,7 @@ class KeyList extends Component {
   render() {let keyItems;
   if(this.props.keyList){
     keyItems = this.props.keyList.map(keyItem => {
-      console.log(keyItem);
+      // console.log(keyItem);
       return (
         <KeyItem key={keyItem.label} keyItem={keyItem} />
         // key={project.title}
