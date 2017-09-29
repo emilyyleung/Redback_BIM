@@ -187,9 +187,15 @@ class App extends Component {
       console.log(this.project.id);
       console.log(this.state.value);
       console.log(this.key.id);
-      helpers.updateCellValue(this.project, this.key, this.state.value).then((cell)=>{
-        this.state.value = cell.value;
+      this.setState({
+        "data": "Loading..."
+      });
+      helpers.updateCellValue(this.project, this.key, parseInt(this.state.value)).then((cell)=>{
+        this.setState.value = cell.value;
         this.updateViewport(this.value);
+        this.setState({
+          "data": parseInt(this.state.value)
+        });
     });
   }
 }
@@ -200,7 +206,7 @@ class App extends Component {
 
     // console.log(this.key); // Obtains the key
     // console.log(this.project); // Obtains the key
-
+    console.log(this.state.value);
 
     return (
       <div className="App">
