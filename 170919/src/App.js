@@ -11,7 +11,7 @@ import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 // import KeySlider from './Components/Slider';
 import KeyList from './Components/KeyList';
-import AddKey from './Components/AddKey';
+// import AddKey from './Components/AddKey';
 
 const config = {
   url: window.location.href,
@@ -52,22 +52,9 @@ class App extends Component {
     });
   }
 
-
-
   handleSubmitUpdate(event){
     alert('This was submitted:' + this.state.value);
     event.preventDefault();
-  }
-
-  handleSubmitKey(keyItem){
-    let createNewCell = this.createCell;
-    let thisProject = this.project;
-    let newlyMadeKey = this.keyItem;
-
-    if(keyItem === '') {
-      createNewCell.push(thisProject, newlyMadeKey);
-
-    }
   }
 
   setViewport(div)
@@ -200,6 +187,21 @@ class App extends Component {
   }
 }
 
+handleSubmitKey(e) {
+  console.log(this.refs.keyItem.value);
+  if(this.refs.keyItem.value === ''){
+    alert('Key is required');
+  } else {
+    this.setState({newKey:{
+      keyItem: this.refs.keyItem.value
+    }}, function(){
+       console.log(this.state.newKey);
+       helpers.createCell(this.project, this.refs.keyItem.value)
+    });
+  }
+   e.preventDefault();
+}
+
   render() {
     // console.log(this.state.data); // value of initial state
     // console.log(this.state.value); // value of slider
@@ -214,9 +216,20 @@ class App extends Component {
           {this._getContent()}
           <div className="info">
             <Projects projects={this.state.projects} />
+            <hr/>
             <KeyList test="Hello World" keyList={this.state.keys} keyData={this.state.data} />
-            <AddKey addKey={this.handleSubmitKey.bind(this)}/> <br />
-
+            <hr />
+            <div className="AddKey">
+              <form onSubmit={this.handleSubmitKey.bind(this)} >
+                <h3>Add Key</h3>
+                <div className="create">
+                  <input type="text" ref="keyItem" />
+                  <input type="submit" value="Create Key" onClick={this.handleSubmitKey.bind(this)} />
+                </div>
+              </form>
+            </div>
+            <hr />
+            <h3>Update Key</h3>
             <strong>Current Value of key:</strong> {this.state.data}
 
             <form>
