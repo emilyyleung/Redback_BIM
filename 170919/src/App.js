@@ -52,9 +52,7 @@ class App extends Component {
     });
   }
 
-  handleChangeUpdate(event) {
-    this.setState({value: event.target.value});
-  }
+
 
   handleSubmitUpdate(event){
     alert('This was submitted:' + this.state.value);
@@ -62,10 +60,6 @@ class App extends Component {
   }
 
   handleSubmitKey(keyItem){
-    // console.log(keyItem);
-    // keyList.push(keyItem);
-    // this.setState({keyList: keyList});
-    // console.log(this.keyList);
     let createNewCell = this.createCell;
     let thisProject = this.project;
     let newlyMadeKey = this.keyItem;
@@ -144,17 +138,9 @@ class App extends Component {
       this.updateViewport(this.value);
       this.setState({
         "data": JSON.stringify(this.value)
-
       });
     });
-    console.log(this.state.data)
-  }
-
-  _updateCellValue(sel){
-    this.key = this.keyMap[sel.value];
-    helpers.updateCellValue(this.project, this.key, this.value).then((cell)=>{
-      this.value = cell.value;
-    });
+    // console.log(this.state.data)
   }
 
   _getOptions() {
@@ -190,18 +176,31 @@ class App extends Component {
   }
 
   keyChange(event)  {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     this.setState({value:event.target.value});
   }
 
-
+  updateKey(e){
+    if(this.project != null || this.state.value != null) {
+      e.preventDefault();
+      console.log(this.state.data);
+      console.log(this.project.id);
+      console.log(this.state.value);
+      console.log(this.key.id);
+      helpers.updateCellValue(this.project, this.key, this.state.value).then((cell)=>{
+        this.state.value = cell.value;
+        this.updateViewport(this.value);
+    });
+  }
+}
 
   render() {
-    // console.log(this.state.projects);
-    // console.log(this.state.keys);
-    // console.log(this.state.data);
-    // console.log(this);
-    console.log(this.state.value);
+    // console.log(this.state.data); // value of initial state
+    // console.log(this.state.value); // value of slider
+
+    // console.log(this.key); // Obtains the key
+    // console.log(this.project); // Obtains the key
+
 
     return (
       <div className="App">
@@ -212,9 +211,9 @@ class App extends Component {
             <KeyList test="Hello World" keyList={this.state.keys} keyData={this.state.data} />
             <AddKey addKey={this.handleSubmitKey.bind(this)}/> <br />
 
-            {this.state.data}
+            <strong>Current Value of key:</strong> {this.state.data}
 
-            <form onSubmit={this.handleSubmitUpdate}>
+            <form>
               <input
                 style={{ width: 250}}
                 id="key_slider"
@@ -222,15 +221,14 @@ class App extends Component {
                 min="0" max="100"
                 step="1"
                 defaultValue={this.state.data}
-                // value={this.state.value}
                 onChange={this.keyChange.bind(this)}
                 ref={(input) => this.input = input}
               />
+              <strong>New Value to submit:</strong> {this.state.value}
               <br/>
-              <input type="submit" value="Submit" />
+              <br/>
+              <input type="submit" value="Submit" onClick={this.updateKey.bind(this)} />
             </form>
-
-
           </div>
       </div>
     );

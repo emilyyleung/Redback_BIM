@@ -22,12 +22,11 @@ class KeySlider extends Component {
     this.setState({value:event.target.value});
   }
 
-  var radius = {this.state.value};
   render() {
     // console.log(this.props.data);
     // console.log(this.state.value);
     // console.log(this.props)
-    console.log(parseInt(this.state.value))
+    // console.log(parseInt(this.state.value))
     return (
       <div>
       <input
