@@ -3,7 +3,7 @@ import './App.css';
 // import * as THREE from 'three';
 import * as helpers from './util/helpers.js';
 import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
-// import $ from 'jquery';
+import $ from 'jquery';
 
 import Button from './Button';
 import Dropdown from './Dropdown';
@@ -73,7 +73,7 @@ class App extends Component {
   updateViewport(json) {
     var data = json;
     if (!FluxViewport.isKnownGeom(json)) {
-      data = sphere;
+      data = null;
     }
 
     this.vp.setGeometryEntity(data).then((result)=>{
@@ -120,6 +120,13 @@ class App extends Component {
     this.setState({
       "data": "Loading..."
     });
+    var selectedProject = this.project;
+    var c = $('#console')
+
+    var notificationHandler = function(msg) {
+      return c.val(c.val()  + msg.type + ": " + msg.body.label + "\n")
+    }
+    helpers.createWebSocket(this.project, notificationHandler);
     helpers.getValue(this.project, this.key).then((cell)=>{
       this.value = cell.value;
       this.updateViewport(this.value);
@@ -160,6 +167,7 @@ class App extends Component {
   // Prevents clobbering of user input by react
   _handleDataChange(e) {
     this.setState({data: e.target.value});
+    console.log("Something happened")
   }
 
   keyChange(event)  {
@@ -248,6 +256,12 @@ handleSubmitKey(e) {
               <br/>
               <input type="submit" value="Submit" onClick={this.updateKey.bind(this)} />
             </form>
+
+            <hr/>
+            <div id="notifications">
+              <h3>Update Log</h3>
+              <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.notificationHandler} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
+            </div>
           </div>
       </div>
     );
@@ -255,3 +269,5 @@ handleSubmitKey(e) {
 }
 
 export default App;
+
+// <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.state.data} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
