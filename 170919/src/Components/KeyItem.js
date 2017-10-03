@@ -8,7 +8,7 @@ class KeyItem extends Component {
   }
 
   render() {
-    console.log(this.props.keyItem.label);
+    // console.log(this.props.keyItem.label);
     return (
       <li className="KeyItem">
         {this.props.keyItem.label.toString()}

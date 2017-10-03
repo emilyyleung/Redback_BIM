@@ -70,9 +70,17 @@ class App extends Component {
       token: token,
       selection: FluxViewport.getSelectionModes().CLICK
     });
-    var sphere = JSON.parse(this.state.data);
-    this.updateViewport(sphere);
-  }
+    // var sphere = JSON.parse(this.state.data);
+    // this.updateViewport(sphere);
+
+    this.vp.addEventListener(FluxViewport.getChangeEvent(), function(e) {
+
+      if(FluxViewport.getEvents().SELECT === e.event) {
+        console.log(e.event)
+      }
+    });
+
+}
 
   updateViewport(json) {
     var data = json;
@@ -161,7 +169,7 @@ class App extends Component {
     if (this.project != null) {
       return (
         <div className="content">
-          <div className="viewport" ref={this.setViewport.bind(this)}></div>
+          <div className="viewport" ref={this.setViewport.bind(this)} ></div>
         </div>
         );
     } else {
@@ -268,6 +276,7 @@ handleSubmitKey(e) {
               <h3>Update Log</h3>
               <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.notificationHandler} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
             </div>
+
           </div>
       </div>
     );
