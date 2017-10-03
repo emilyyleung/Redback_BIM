@@ -4,13 +4,14 @@ class KeyItem extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    
-  }
-  render() {
 
+  }
+
+  render() {
+    console.log(this.props.keyItem.label);
     return (
       <li className="KeyItem">
-        {this.props.keyItem.label}
+        {this.props.keyItem.label.toString()}
       </li>
     );
   }

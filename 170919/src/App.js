@@ -65,7 +65,11 @@ class App extends Component {
 
     // Set up the FluxViewport in it's container
     var token = helpers.getFluxToken();
-    this.vp = new FluxViewport(this.div, {projectId: this.project.id, token: token});
+    this.vp = new FluxViewport(this.div, {
+      projectId: this.project.id,
+      token: token,
+      selection: FluxViewport.getSelectionModes().CLICK
+    });
     var sphere = JSON.parse(this.state.data);
     this.updateViewport(sphere);
   }
@@ -78,6 +82,7 @@ class App extends Component {
 
     this.vp.setGeometryEntity(data).then((result)=>{
       this.vp.focus();
+
       //this.vp._renderer._scene
       this.setState({dataThree: JSON.stringify(result.getObject())});
     });
@@ -120,7 +125,7 @@ class App extends Component {
     this.setState({
       "data": "Loading..."
     });
-    var selectedProject = this.project;
+
     var c = $('#console')
 
     var notificationHandler = function(msg) {
@@ -216,7 +221,8 @@ handleSubmitKey(e) {
 
     // console.log(this.key); // Obtains the key
     // console.log(this.project); // Obtains the key
-    console.log(this.state.value);
+
+    // console.log(this.state.keys);
 
     return (
       <div className="App">
