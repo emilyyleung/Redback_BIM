@@ -8,25 +8,25 @@ div.options {
 
 textarea.fields {
     min-width: 350px;
-    min-height: 200px;
+    min-height: 100px;
 }
 
 div.viewport {
-  /*height: 80vh;
-  width: 75vh;*/
-  height: 800px;
-  width: 800px;
+  height: 80vh;
+  width: 80vh;
+  /*height: 800px;
+  width: 500px;*/
 }
 
 div.content {
   float: right;
-  width: 50%;
+  width: 60%;
   height: 100%;
   z-index: 2;
 }
 
 div.info {
-  width: 50%;
+  width: 40%;
   height: 100%;
   z-index: 3;
 }

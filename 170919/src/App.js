@@ -7,11 +7,8 @@ import $ from 'jquery';
 
 import Button from './Button';
 import Dropdown from './Dropdown';
-
 import Projects from './Components/Projects';
-// import KeySlider from './Components/Slider';
 import KeyList from './Components/KeyList';
-// import AddKey from './Components/AddKey';
 
 const config = {
   url: window.location.href,
@@ -31,8 +28,7 @@ class App extends Component {
       dataThree: '',
       image: ''
     };
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+
     this.projectMap = {};
     this.keyMap = {};
     helpers.init(config).then((loggedIn) => {
@@ -57,6 +53,7 @@ class App extends Component {
     event.preventDefault();
   }
 
+
   setViewport(div)
   {
     if (div == null || this.viewportDiv != null) return;
@@ -73,13 +70,20 @@ class App extends Component {
     // var sphere = JSON.parse(this.state.data);
     // this.updateViewport(sphere);
 
-    this.vp.addEventListener(FluxViewport.getChangeEvent(), function(e) {
+    //
 
-      if(FluxViewport.getEvents().SELECT === e.event) {
-        console.log(e.event)
+    this.vp.addEventListener(FluxViewport.getChangeEvent(), function(e) {
+      var selectedGeometry = e.selection;
+      for(this.x in selectedGeometry) {
+        var selectedGeometryObject = selectedGeometry[this.x];
+      }
+      if(selectedGeometryObject !== null) {
+        console.log(selectedGeometryObject);
+        console.log(selectedGeometryObject.userData.data);
+      } else {
+        console.log("Nothing")
       }
     });
-
 }
 
   updateViewport(json) {
@@ -91,12 +95,12 @@ class App extends Component {
     this.vp.setGeometryEntity(data).then((result)=>{
       this.vp.focus();
 
-      //this.vp._renderer._scene
+      // this.vp._renderer._scene
       this.setState({dataThree: JSON.stringify(result.getObject())});
     });
   }
   _onLogin() {
-      // don't need to updste state since page changes and state will refresh on load
+      // don't need to update state since page changes and state will refresh on load
       helpers.login();
   }
 
@@ -223,6 +227,34 @@ handleSubmitKey(e) {
    e.preventDefault();
 }
 
+createClippingPlane(e, json) {
+  e.preventDefault();
+
+  if(this.project !== null && this.state.value !== null) {
+    if (!FluxViewport.isKnownGeom(json)) {
+      console.log("Clipping Plane");
+    }
+
+    // var p = new THREE.Vector3(0, 5, 0);
+    // var n = new THREE.Vector3(0, 10, 0);
+    // var d = new THREE.Vector3(0, -5, 0);
+    // var o = new THREE.Vector3(0, 0, 0);
+    //
+    // var px = 10;
+    // var py = 10;
+    // var pz = 10;
+    // var nx = 10;
+    // var ny = 10;
+    // var nz = 10;
+    //
+    // this.vp.activateClipping(px, py, pz, nx, ny, nz);
+
+  } else {
+    alert("Please Select a project and key")
+  }
+
+}
+
   render() {
     // console.log(this.state.data); // value of initial state
     // console.log(this.state.value); // value of slider
@@ -269,6 +301,13 @@ handleSubmitKey(e) {
               <br/>
               <br/>
               <input type="submit" value="Submit" onClick={this.updateKey.bind(this)} />
+            </form>
+
+            <hr/>
+
+            <h3>Clipping Plane</h3>
+            <form>
+              <input type="submit" value="Clipping Plane" onClick={this.createClippingPlane.bind(this)} />
             </form>
 
             <hr/>
