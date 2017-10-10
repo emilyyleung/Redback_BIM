@@ -74,12 +74,13 @@ class App extends Component {
 
     this.vp.addEventListener(FluxViewport.getChangeEvent(), function(e) {
       var selectedGeometry = e.selection;
+      // console.log(e.selection)
       for(this.x in selectedGeometry) {
         var selectedGeometryObject = selectedGeometry[this.x];
       }
-      if(selectedGeometryObject !== null) {
+      if(selectedGeometryObject !== null && selectedGeometryObject !== undefined) {
         console.log(selectedGeometryObject);
-        console.log(selectedGeometryObject.userData.data);
+        console.log(JSON.stringify(selectedGeometryObject.userData.data));
       } else {
         console.log("Nothing")
       }
