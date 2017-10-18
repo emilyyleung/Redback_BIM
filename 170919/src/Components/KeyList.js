@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import KeyItem from './KeyItem'
 
 class KeyList extends Component {
-  render() {let keyItems;
+  render() {
+    let keyItems;
   if(this.props.keyList){
     keyItems = this.props.keyList.map(keyItem => {
       // console.log(keyItem);
@@ -12,6 +13,7 @@ class KeyList extends Component {
       );
     });
   }
+
     // console.log(this.props.keyList); // KeyList in one array
     return (
       <div className="KeyList">

@@ -10,6 +10,7 @@ import Button from './Button';
 import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 import KeyList from './Components/KeyList';
+import DataTable from './Components/DataTable';
 
 const config = {
   url: window.location.href,
@@ -27,7 +28,9 @@ class App extends Component {
       keys: [],
       data: sphere.radius,
       dataThree: '',
-      image: ''
+      image: '',
+      text: 'Example text value',
+      dataTableKeys: []
     };
 
     this.projectMap = {};
@@ -87,46 +90,83 @@ class App extends Component {
         // ('Book ID', 'Book Name', 'Category' and 'Price')
         var myData = JSON.parse("[" + JSON.stringify(selectedGeometryObject.userData.data) + "]" );
 
-        var col = [];
-        for (var i = 0; i < myData.length; i++) {
-            for (var key in myData[i]) {
-                if (col.indexOf(key) === -1) {
-                    col.push(key);
-                }
+        var col=[];
+
+        for(var i in myData){
+            // var key = i;
+            var val = myData[i];
+            for(var j in val){
+                var sub_key = j;
+                var sub_val = val[j];
+                col.push(sub_key);
+
+                // console.log(sub_key);
+                console.log(sub_val);
+                // console.log(col);
             }
         }
 
-        // CREATE DYNAMIC TABLE.
-        var table = document.createElement("table");
+        var dataTableKeys = col;
+        // console.log(dataTableKeys);
 
-        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-
-        var tr = table.insertRow(-1);                   // TABLE ROW.
-
-        for (var i = 0; i < col.length; i++) {
-            var th = document.createElement("th");      // TABLE HEADER.
-            th.innerHTML = col[i];
-            tr.appendChild(th);
-        }
-
-        // ADD JSON DATA TO THE TABLE AS ROWS.
-        for (var i = 0; i < myData.length; i++) {
-
-            tr = table.insertRow(-1);
-
-            for (var j = 0; j < col.length; j++) {
-                var tabCell = tr.insertCell(-1);
-                tabCell.innerHTML = myData[i][col[j]];
-            }
-        }
-
-        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("showData");
-        divContainer.innerHTML = "";
-        divContainer.appendChild(table);
+        //
+        // function toArray(myDataSet) {
+        //   var colValue = [];
+        //   for (const prop in myDataSet) {
+        //     const value = myDataSet[prop];
+        //     if (typeof value === 'object') {
+        //       colValue.push(toArray(value));
+        //     } else {
+        //       colValue.push(value);
+        //     }
+        //   }
+        //   return colValue;
+        // }
+        //
+        // console.log(toArray(myData));
 
 
-        console.log(myData);
+
+        // var col = [];
+        // for (var i = 0; i < myData.length; i++) {
+        //     for (var key in myData[i]) {
+        //         if (col.indexOf(key) === -1) {
+        //             col.push(key);
+        //         }
+        //     }
+        // }
+        //
+        // // CREATE DYNAMIC TABLE.
+        // var table = document.createElement("table");
+        //
+        // // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+        //
+        // var tr = table.insertRow(-1);                   // TABLE ROW.
+        //
+        // for (var i = 0; i < col.length; i++) {
+        //     var th = document.createElement("th");      // TABLE HEADER.
+        //     th.innerHTML = col[i];
+        //     tr.appendChild(th);
+        // }
+        //
+        // // ADD JSON DATA TO THE TABLE AS ROWS.
+        // for (var i = 0; i < myData.length; i++) {
+        //
+        //     tr = table.insertRow(-1);
+        //
+        //     for (var j = 0; j < col.length; j++) {
+        //         var tabCell = tr.insertCell(-1);
+        //         tabCell.innerHTML = myData[i][col[j]];
+        //     }
+        // }
+        //
+        // // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        // var divContainer = document.getElementById("showData");
+        // divContainer.innerHTML = "";
+        // divContainer.appendChild(table);
+
+
+        // console.log(myData);
       } else {
         console.log("Nothing")
         $( "#showData" ).empty();
@@ -275,14 +315,9 @@ handleSubmitKey(e) {
    e.preventDefault();
 }
 
-createClippingPlane(e, json) {
+UpdateDataTable(e){
   e.preventDefault();
-
-  if(this.project !== null && this.state.value !== null) {
-      console.log("Clipping Plane");
-  } else {
-    alert("Please Select a project and key")
-  }
+  console.log('Updated')
 }
 
   render() {
@@ -302,6 +337,21 @@ createClippingPlane(e, json) {
             <Projects projects={this.state.projects} />
             <hr/>
             <KeyList test="Hello World" keyList={this.state.keys} keyData={this.state.data} />
+            <hr />
+
+            <DataTable test="Hello World" dataTableList={this.state.attributeName} dataTableValue={this.state.message} />
+
+            <div className="DataTable">
+              <br/>
+              <div className="UpdateDataTable">
+                <form onSubmit={this.UpdateDataTable.bind(this)} >
+                  <div className="UpdateDataTable">
+                    <input type="submit" value="Update" onClick={this.UpdateDataTable.bind(this)} />
+                  </div>
+                </form>
+              </div>
+            </div>
+
             <hr />
 
             <h3>Data Table</h3>
@@ -341,14 +391,6 @@ createClippingPlane(e, json) {
 
             <hr/>
 
-            <h3>Clipping Plane</h3>
-            <form>
-              <input type="submit" value="Clipping Plane" onClick={this.createClippingPlane.bind(this)} />
-            </form>
-
-            <hr/>
-
-
             <div id="notifications">
               <h3>Update Log</h3>
               <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.notificationHandler} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
@@ -361,5 +403,3 @@ createClippingPlane(e, json) {
 }
 
 export default App;
-
-// <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.state.data} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
