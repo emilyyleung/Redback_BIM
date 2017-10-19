@@ -5,19 +5,21 @@ import './App.css';
 import * as helpers from './util/helpers.js';
 import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
 import $ from 'jquery';
+import { JsonTree,ADD_DELTA_TYPE, REMOVE_DELTA_TYPE, UPDATE_DELTA_TYPE } from 'react-editable-json-tree';
+import ReactJson from 'react-json-view';
 
 import Button from './Button';
 import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 import KeyList from './Components/KeyList';
-import DataTable from './Components/DataTable';
 
 const config = {
   url: window.location.href,
   flux_url: 'https://flux.io', // flux url
   flux_client_id: 'b99a9013-2742-4900-b52d-21ceb4b0b920' // your app's client id
 }
-const sphere = {"origin":[0,0,0],"primitive":"sphere","radius":5};
+// var object = {"origin":[0,0,0],"primitive":"sphere","radius":5};
+var object = '';
 
 class App extends Component {
   constructor(props) {
@@ -26,11 +28,10 @@ class App extends Component {
       loggedIn: false,
       projects: [],
       keys: [],
-      data: sphere.radius,
+      data: object.radius,
       dataThree: '',
       image: '',
-      text: 'Example text value',
-      dataTableKeys: []
+      object: ''
     };
 
     this.projectMap = {};
@@ -83,12 +84,8 @@ class App extends Component {
         var selectedGeometryObject = selectedGeometry[this.x];
       }
       if(selectedGeometryObject !== null && selectedGeometryObject !== undefined) {
-        // console.log(selectedGeometryObject);
-        // console.log(JSON.stringify(selectedGeometryObject.userData.data));
 
-        // EXTRACT VALUE FOR HTML HEADER.
-        // ('Book ID', 'Book Name', 'Category' and 'Price')
-        var myData = JSON.parse("[" + JSON.stringify(selectedGeometryObject.userData.data) + "]" );
+        var myData = JSON.parse(JSON.stringify(selectedGeometryObject.userData.data));
 
         var col=[];
 
@@ -97,76 +94,12 @@ class App extends Component {
             var val = myData[i];
             for(var j in val){
                 var sub_key = j;
-                var sub_val = val[j];
+                // var sub_val = val[j];
                 col.push(sub_key);
-
-                // console.log(sub_key);
-                console.log(sub_val);
-                // console.log(col);
             }
         }
-
-        var dataTableKeys = col;
-        // console.log(dataTableKeys);
-
-        //
-        // function toArray(myDataSet) {
-        //   var colValue = [];
-        //   for (const prop in myDataSet) {
-        //     const value = myDataSet[prop];
-        //     if (typeof value === 'object') {
-        //       colValue.push(toArray(value));
-        //     } else {
-        //       colValue.push(value);
-        //     }
-        //   }
-        //   return colValue;
-        // }
-        //
-        // console.log(toArray(myData));
-
-
-
-        // var col = [];
-        // for (var i = 0; i < myData.length; i++) {
-        //     for (var key in myData[i]) {
-        //         if (col.indexOf(key) === -1) {
-        //             col.push(key);
-        //         }
-        //     }
-        // }
-        //
-        // // CREATE DYNAMIC TABLE.
-        // var table = document.createElement("table");
-        //
-        // // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-        //
-        // var tr = table.insertRow(-1);                   // TABLE ROW.
-        //
-        // for (var i = 0; i < col.length; i++) {
-        //     var th = document.createElement("th");      // TABLE HEADER.
-        //     th.innerHTML = col[i];
-        //     tr.appendChild(th);
-        // }
-        //
-        // // ADD JSON DATA TO THE TABLE AS ROWS.
-        // for (var i = 0; i < myData.length; i++) {
-        //
-        //     tr = table.insertRow(-1);
-        //
-        //     for (var j = 0; j < col.length; j++) {
-        //         var tabCell = tr.insertCell(-1);
-        //         tabCell.innerHTML = myData[i][col[j]];
-        //     }
-        // }
-        //
-        // // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        // var divContainer = document.getElementById("showData");
-        // divContainer.innerHTML = "";
-        // divContainer.appendChild(table);
-
-
-        // console.log(myData);
+        // var dataTableList = col;
+        console.log(JSON.stringify(myData))
       } else {
         console.log("Nothing")
         $( "#showData" ).empty();
@@ -179,6 +112,7 @@ class App extends Component {
     if (!FluxViewport.isKnownGeom(json)) {
       data = null;
     }
+    object = data;
 
     this.vp.setGeometryEntity(data).then((result)=>{
       this.vp.focus();
@@ -315,10 +249,15 @@ handleSubmitKey(e) {
    e.preventDefault();
 }
 
-UpdateDataTable(e){
+getObjectData(e){
   e.preventDefault();
-  console.log('Updated')
+  console.log('Hello')
 }
+
+helloworld(e){
+  console.log('edit has been made ')
+}
+
 
   render() {
     // console.log(this.state.data); // value of initial state
@@ -339,23 +278,23 @@ UpdateDataTable(e){
             <KeyList test="Hello World" keyList={this.state.keys} keyData={this.state.data} />
             <hr />
 
-            <DataTable test="Hello World" dataTableList={this.state.attributeName} dataTableValue={this.state.message} />
-
-            <div className="DataTable">
-              <br/>
-              <div className="UpdateDataTable">
-                <form onSubmit={this.UpdateDataTable.bind(this)} >
-                  <div className="UpdateDataTable">
-                    <input type="submit" value="Update" onClick={this.UpdateDataTable.bind(this)} />
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <hr />
-
             <h3>Data Table</h3>
             <div id="showData" className="showDataTable" ></div>
+
+            <hr/>
+
+            <ReactJson src={object} onEdit={this.helloworld.bind(this)} theme="base01" />
+
+            <hr/>
+
+            <div>
+              <form onSubmit={this.getObjectData.bind(this)}>
+                <h2>Attributes</h2>
+                <JsonTree data={object} />
+                <br/>
+                <input type="submit" value="Update Data" onClick={this.getObjectData.bind(this)} />
+              </form>
+            </div>
 
             <hr/>
 

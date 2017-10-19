@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 import InlineEdit from 'react-edit-inline';
 
-class DataTableItem extends Component {
-    constructor(props){
-      super(props);
-      this.dataChanged = this.dataChanged.bind(this);
-      this.state = {
-        message: 'hello world',
-        attributeName: 'Hello World'
-      }
-    }
-
+class AttributeItem extends Component {
     dataChanged(data) {
         // data = { description: "New validated text comes here" }
         // Update your model from here
-        console.log(data)
+        // console.log(data)
         this.setState({...data})
     }
 
@@ -23,15 +14,16 @@ class DataTableItem extends Component {
     }
 
     render() {
+      // console.log(this.props)
         return (
           <div className="DataTableItem">
-            <span>{this.state.attributeName}: </span>
+            <span>{this.props.test}: </span>
             <InlineEdit
               validate={this.customValidateText}
               activeClassName="editing"
-              text={this.state.message}
+              text={this.props.test}
               paramName="message"
-              change={this.dataChanged}
+              change={this.dataChanged.bind(this)}
               style={{
                 backgroundColor: 'lightgrey',
                 minWidth: 150,
@@ -48,4 +40,4 @@ class DataTableItem extends Component {
     }
 }
 
-export default DataTableItem;
+export default AttributeItem;
