@@ -5,7 +5,6 @@ import './App.css';
 import * as helpers from './util/helpers.js';
 import FluxViewport from 'flux-viewport/dist/flux-viewport.common.js';
 import $ from 'jquery';
-import { JsonTree,ADD_DELTA_TYPE, REMOVE_DELTA_TYPE, UPDATE_DELTA_TYPE } from 'react-editable-json-tree';
 import ReactJson from 'react-json-view';
 
 import Button from './Button';
@@ -249,15 +248,18 @@ handleSubmitKey(e) {
    e.preventDefault();
 }
 
-getObjectData(e){
-  e.preventDefault();
-  console.log('Hello')
+editAttribute = (object) => {
+  // console.log(updated_src)
+  console.log(object.updated_src)
 }
 
-helloworld(e){
-  console.log('edit has been made ')
+addAttribute = (object) => {
+  console.log(object.updated_src)
 }
 
+deleteAttribute = (object) => {
+  console.log(object.updated_src)
+}
 
   render() {
     // console.log(this.state.data); // value of initial state
@@ -280,21 +282,7 @@ helloworld(e){
 
             <h3>Data Table</h3>
             <div id="showData" className="showDataTable" ></div>
-
-            <hr/>
-
-            <ReactJson src={object} onEdit={this.helloworld.bind(this)} theme="base01" />
-
-            <hr/>
-
-            <div>
-              <form onSubmit={this.getObjectData.bind(this)}>
-                <h2>Attributes</h2>
-                <JsonTree data={object} />
-                <br/>
-                <input type="submit" value="Update Data" onClick={this.getObjectData.bind(this)} />
-              </form>
-            </div>
+            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.addAttribute.bind(this)} onDelete={this.deleteAttribute.bind(this)} theme="base01" />
 
             <hr/>
 
