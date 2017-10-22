@@ -2,8 +2,21 @@
   padding: 20px;
 }
 
+div.ApplicationTitle {
+  float: left;
+  margin-top: -20px;
+  margin-right: 20px;
+  display: inline;
+}
+
+.red {
+ color: red;
+ }
+
 div.options {
   text-align: right;
+  overflow: auto;
+  position: initial;
 }
 
 textarea.fields {

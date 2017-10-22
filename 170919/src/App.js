@@ -114,7 +114,7 @@ class App extends Component {
     object = data;
 
     this.vp.setGeometryEntity(data).then((result)=>{
-      this.vp.focus();
+      // this.vp.focus();
 
       // this.vp._renderer._scene
       this.setState({dataThree: JSON.stringify(result.getObject())});
@@ -177,10 +177,16 @@ class App extends Component {
 
   _getOptions() {
     if (this.state.loggedIn) {
-      return (<div className="options">
-        <Button label="Logout" callback={()=>{this._onLogout()}}></Button>
-        <Dropdown hint="select project" callback={(e)=>{this._selectProject(e.currentTarget)}} items={this.state.projects}></Dropdown>
-        <Dropdown hint="select key" callback={(e)=>{this._keyChange(e.currentTarget)}} items={this.state.keys}></Dropdown>
+      return (
+      <div>
+        <div className="options">
+        <div className="ApplicationTitle" >
+          <h1>Project <strong><span className="red">RED</span></strong>BACK</h1>
+        </div>
+          <Button label="Logout" callback={()=>{this._onLogout()}}></Button>
+          <Dropdown hint="select project" callback={(e)=>{this._selectProject(e.currentTarget)}} items={this.state.projects}></Dropdown>
+          <Dropdown hint="select key" callback={(e)=>{this._keyChange(e.currentTarget)}} items={this.state.keys}></Dropdown>
+        </div>
       </div>);
     } else {
       return (
@@ -311,27 +317,6 @@ deleteAttribute = (object) => {
               </form>
             </div>
             <hr />
-            <h3>Update Key</h3>
-            <strong>Current Value of key:</strong> {this.state.data}
-
-            <form>
-              <input
-                style={{ width: 250}}
-                id="key_slider"
-                type="range"
-                min="0" max="100"
-                step="1"
-                defaultValue={this.state.data}
-                onChange={this.keyChange.bind(this)}
-                ref={(input) => this.input = input}
-              />
-              <strong>New Value to submit:</strong> {this.state.value}
-              <br/>
-              <br/>
-              <input type="submit" value="Submit" onClick={this.updateKey.bind(this)} />
-            </form>
-
-            <hr/>
 
             <div id="notifications">
               <h3>Update Log</h3>
