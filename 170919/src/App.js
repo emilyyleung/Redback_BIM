@@ -18,7 +18,7 @@ const config = {
   flux_client_id: 'b99a9013-2742-4900-b52d-21ceb4b0b920' // your app's client id
 }
 // var object = {"origin":[0,0,0],"primitive":"sphere","radius":5};
-var object = '';
+var object = {};
 
 class App extends Component {
   constructor(props) {
@@ -250,15 +250,30 @@ handleSubmitKey(e) {
 
 editAttribute = (object) => {
   // console.log(updated_src)
-  console.log(object.updated_src)
+  console.log(JSON.stringify(object.updated_src));
+  var hello = JSON.parse(JSON.stringify(object.updated_src));
+  if(this.project != null || this.state.value != null || object.updated_src !=null) {
+    this.setState({
+      "data": JSON.stringify(hello),
+      "object": JSON.stringify(hello)
+    });
+    // console.log("hello world")
+    helpers.updateCellValue(this.project, this.key, hello).then((cell)=>{
+      this.setState.value = cell.value;
+      this.updateViewport(JSON.parse(this.state.data));
+      this.setState({
+        "data": this.state.data
+      });
+    });
+  }
 }
 
 addAttribute = (object) => {
-  console.log(object.updated_src)
+  // console.log(object.updated_src)
 }
 
 deleteAttribute = (object) => {
-  console.log(object.updated_src)
+  // console.log(object.updated_src)
 }
 
   render() {
@@ -282,7 +297,7 @@ deleteAttribute = (object) => {
 
             <h3>Data Table</h3>
             <div id="showData" className="showDataTable" ></div>
-            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.addAttribute.bind(this)} onDelete={this.deleteAttribute.bind(this)} theme="base01" />
+            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.editAttribute} onDelete={this.editAttribute} theme="base01" />
 
             <hr/>
 
