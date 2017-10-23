@@ -11,6 +11,7 @@ import Button from './Button';
 import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 import KeyList from './Components/KeyList';
+import logo from './ImageREF/ICON.png' // relative path to image
 
 const config = {
   url: window.location.href,
@@ -181,7 +182,8 @@ class App extends Component {
       <div>
         <div className="options">
         <div className="ApplicationTitle" >
-          <h1>Project <strong><span className="red">RED</span></strong>BACK</h1>
+
+          <h1><span><img src={logo} alt={"logo"}/></span>Project <strong><span className="red">RED</span></strong>BACK</h1>
         </div>
           <Button label="Logout" callback={()=>{this._onLogout()}}></Button>
           <Dropdown hint="select project" callback={(e)=>{this._selectProject(e.currentTarget)}} items={this.state.projects}></Dropdown>
