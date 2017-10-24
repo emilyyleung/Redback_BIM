@@ -11,7 +11,8 @@ import Button from './Button';
 import Dropdown from './Dropdown';
 import Projects from './Components/Projects';
 import KeyList from './Components/KeyList';
-import logo from './ImageREF/ICON.png' // relative path to image
+// import logo from './ImageREF/ICON.png' // relative path to image
+import logo from './ImageREF/Redback.svg';
 
 const config = {
   url: window.location.href,
@@ -84,28 +85,59 @@ class App extends Component {
         var selectedGeometryObject = selectedGeometry[this.x];
       }
       if(selectedGeometryObject !== null && selectedGeometryObject !== undefined) {
+        // console.log(selectedGeometryObject);
+        // console.log(JSON.stringify(selectedGeometryObject.userData.data));
 
         var myData = JSON.parse(JSON.stringify(selectedGeometryObject.userData.data));
 
-        var col=[];
+        // var myData = JSON.parse("[" + JSON.stringify(selectedGeometryObject.userData.data) + "]" );
+        // var col = [];
+        // for (var i = 0; i < myData.length; i++) {
+        //     for (var key in myData[i]) {
+        //         if (col.indexOf(key) === -1) {
+        //             col.push(key);
+        //         }
+        //     }
+        // }
+        //
+        // // CREATE DYNAMIC TABLE.
+        // var table = document.createElement("table");
+        //
+        // // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+        //
+        // var tr = table.insertRow(-1);                   // TABLE ROW.
+        //
+        // for (var i = 0; i < col.length; i++) {
+        //     var th = document.createElement("th");      // TABLE HEADER.
+        //     th.innerHTML = col[i];
+        //     tr.appendChild(th);
+        // }
+        //
+        // // ADD JSON DATA TO THE TABLE AS ROWS.
+        // for (var i = 0; i < myData.length; i++) {
+        //
+        //     tr = table.insertRow(-1);
+        //
+        //     for (var j = 0; j < col.length; j++) {
+        //         var tabCell = tr.insertCell(-1);
+        //         tabCell.innerHTML = myData[i][col[j]];
+        //     }
+        // }
+        //
+        // // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        // var divContainer = document.getElementById("showData");
+        // divContainer.innerHTML = "";
+        // divContainer.appendChild(table);
 
-        for(var i in myData){
-            // var key = i;
-            var val = myData[i];
-            for(var j in val){
-                var sub_key = j;
-                // var sub_val = val[j];
-                col.push(sub_key);
-            }
-        }
-        // var dataTableList = col;
-        console.log(JSON.stringify(myData))
+
+        console.log(JSON.stringify(myData));
       } else {
         console.log("Nothing")
         $( "#showData" ).empty();
       }
     });
 }
+
 
   updateViewport(json) {
     var data = json;
@@ -115,7 +147,7 @@ class App extends Component {
     object = data;
 
     this.vp.setGeometryEntity(data).then((result)=>{
-      // this.vp.focus();
+      this.vp.focus();
 
       // this.vp._renderer._scene
       this.setState({dataThree: JSON.stringify(result.getObject())});
@@ -183,7 +215,7 @@ class App extends Component {
         <div className="options">
         <div className="ApplicationTitle" >
 
-          <h1><span><img src={logo} alt={"logo"}/></span>Project <strong><span className="red">RED</span></strong>BACK</h1>
+          <h1><span><img src={logo} alt={"logo"}/></span><strong><span className="red">RED</span></strong>BACK <strong>BIM</strong></h1>
         </div>
           <Button label="Logout" callback={()=>{this._onLogout()}}></Button>
           <Dropdown hint="select project" callback={(e)=>{this._selectProject(e.currentTarget)}} items={this.state.projects}></Dropdown>
@@ -276,13 +308,13 @@ editAttribute = (object) => {
   }
 }
 
-addAttribute = (object) => {
-  // console.log(object.updated_src)
-}
-
-deleteAttribute = (object) => {
-  // console.log(object.updated_src)
-}
+// addAttribute = (object) => {
+//   // console.log(object.updated_src)
+// }
+//
+// deleteAttribute = (object) => {
+//   // console.log(object.updated_src)
+// }
 
   render() {
     // console.log(this.state.data); // value of initial state
@@ -305,7 +337,7 @@ deleteAttribute = (object) => {
 
             <h3>Data Table</h3>
             <div id="showData" className="showDataTable" ></div>
-            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.editAttribute} onDelete={this.editAttribute} theme="base01" />
+            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.editAttribute} onDelete={this.editAttribute} theme="base01" collapsed={1} iconStyle="square" />
 
             <hr/>
 
@@ -318,6 +350,7 @@ deleteAttribute = (object) => {
                 </div>
               </form>
             </div>
+
             <hr />
 
             <div id="notifications">
