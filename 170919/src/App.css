@@ -21,6 +21,11 @@ div.options {
   position: initial;
 }
 
+div.KeyList {
+    max-height: 200px;
+    overflow: scroll;
+}
+
 textarea.fields {
     min-width: 350px;
     min-height: 100px;
@@ -40,7 +45,7 @@ div.content {
 }
 
 div.info {
-  width: 40%;
+  width: 20%;
   height: 100%;
 }
 
