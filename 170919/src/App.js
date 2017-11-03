@@ -84,12 +84,13 @@ class App extends Component {
       for(this.x in selectedGeometry) {
         var selectedGeometryObject = selectedGeometry[this.x];
       }
+
       if(selectedGeometryObject !== null && selectedGeometryObject !== undefined) {
         // console.log(selectedGeometryObject);
         // console.log(JSON.stringify(selectedGeometryObject.userData.data));
 
         var myData = JSON.parse(JSON.stringify(selectedGeometryObject.userData.data));
-
+        //
         // var myData = JSON.parse("[" + JSON.stringify(selectedGeometryObject.userData.data) + "]" );
         // var col = [];
         // for (var i = 0; i < myData.length; i++) {
@@ -129,8 +130,8 @@ class App extends Component {
         // divContainer.innerHTML = "";
         // divContainer.appendChild(table);
 
-
-        console.log(JSON.stringify(myData));
+        console.log(myData);
+        // console.log(JSON.stringify(myData));
       } else {
         console.log("Nothing")
         $( "#showData" ).empty();
@@ -147,7 +148,7 @@ class App extends Component {
     object = data;
 
     this.vp.setGeometryEntity(data).then((result)=>{
-      this.vp.focus();
+      // this.vp.focus();
 
       // this.vp._renderer._scene
       this.setState({dataThree: JSON.stringify(result.getObject())});
@@ -186,6 +187,10 @@ class App extends Component {
     }
   }
 
+  updateOtherUser(){
+    console.log("Test")
+  }
+
   _keyChange(sel){
     this.key = this.keyMap[sel.value];
     this.setState({
@@ -195,7 +200,7 @@ class App extends Component {
     var c = $('#console')
 
     var notificationHandler = function(msg) {
-      return c.val(c.val()  + msg.type + ": " + msg.body.label + "\n")
+      return c.val(c.val()  + msg.type + ": " + msg.body.label + "\n");
     }
     helpers.createWebSocket(this.project, notificationHandler);
     helpers.getValue(this.project, this.key).then((cell)=>{
@@ -206,6 +211,15 @@ class App extends Component {
       });
     });
     // console.log(this.state.data)
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.project != null || this.state.value != null) {
+      if(prevState.data !== this.state.data) {
+        this.setState({data: this.state.data})
+        console.log("What")
+      }
+    }
   }
 
   _getOptions() {
@@ -240,6 +254,10 @@ class App extends Component {
     } else {
       return <div className="content"></div>
     }
+  }
+
+  helloWorld(e){
+    console.log("change is made")
   }
   // Function to update react state to match what is in the text box
   // Prevents clobbering of user input by react
@@ -290,6 +308,7 @@ handleSubmitKey(e) {
 
 editAttribute = (object) => {
   // console.log(updated_src)
+
   console.log(JSON.stringify(object.updated_src));
   var hello = JSON.parse(JSON.stringify(object.updated_src));
   if(this.project != null || this.state.value != null || object.updated_src !=null) {
@@ -305,16 +324,8 @@ editAttribute = (object) => {
         "data": this.state.data
       });
     });
-  }
+  };
 }
-
-// addAttribute = (object) => {
-//   // console.log(object.updated_src)
-// }
-//
-// deleteAttribute = (object) => {
-//   // console.log(object.updated_src)
-// }
 
   render() {
     // console.log(this.state.data); // value of initial state
@@ -337,7 +348,7 @@ editAttribute = (object) => {
 
             <h3>Data Table</h3>
             <div id="showData" className="showDataTable" ></div>
-            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.editAttribute} onDelete={this.editAttribute} theme="base01" collapsed={1} iconStyle="square" />
+            <ReactJson src={object} onEdit={this.editAttribute} onAdd={this.editAttribute} onDelete={this.editAttribute} theme="base01" collapsed={1} iconStyle="circle" />
 
             <hr/>
 
@@ -355,7 +366,7 @@ editAttribute = (object) => {
 
             <div id="notifications">
               <h3>Update Log</h3>
-              <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e)}} value={this.notificationHandler} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
+              <textarea id="console" className="fields" type="text" onChange={(e)=>{this._handleDataChange(e); this.helloWorld()}} value={this.notificationHandler} ref={(area)=>{this._comment = area;}} name="Data" ></textarea>
             </div>
 
           </div>
